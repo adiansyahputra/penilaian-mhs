@@ -1,22 +1,14 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Title from './components/Title';
 import { BsPersonCircle } from 'react-icons/bs';
-import { addNilai } from './slices/nilaiSlice';
-import { useState } from 'react';
+import { addAspekPenilaian1Mhs1 } from './slices/nilaiSlice';
 
 function App() {
-  const [nilai, setNilai] = useState('');
   const dispatch = useDispatch();
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(
-      addNilai({
-        aspek_penilaian_1: {
-          mahasiswa_1: nilai,
-        },
-      })
-    );
-  };
+  const aspek_penilaian_1 = useSelector((state) => state.nilai);
+
+  console.log(JSON.stringify(aspek_penilaian_1));
+
   return (
     <div className="max-w-5xl mx-auto w-11/12">
       <Title />
@@ -26,7 +18,7 @@ function App() {
         <h3>Aspek Penilaian 3</h3>
         <h3>Aspek Penilaian 4</h3>
       </div>
-      <form onSubmit={(e) => handleSubmit(e)}>
+      <form>
         <div className="grid grid-cols-5 gap-5 border-solid border-2 rounded-md border-gray-600 p-2">
           <div className="flex flex-row gap-5">
             <BsPersonCircle className="w-7 h-7" />
@@ -35,8 +27,7 @@ function App() {
           <select
             name="nilai"
             id="nilai"
-            value={nilai}
-            onChange={(e) => setNilai(e.target.value)}
+            onChange={(e) => dispatch(addAspekPenilaian1Mhs1(e.target.value))}
           >
             <option value="1">1</option>
             <option value="2">2</option>
